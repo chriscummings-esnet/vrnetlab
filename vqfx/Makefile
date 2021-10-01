@@ -15,7 +15,7 @@ PFE_IMAGE=$(shell ls vqfx-$(PFE_BASE_VERSION)*-pfe-qemu.qcow*)
 -include ../makefile.include
 
 format-legacy-images:
-	@if ls *.vmdk; then echo "VMDKs exist, converting them to qcow format"; qemu-img convert -f vmdk -O qcow2 *-re-*.vmdk vqfx-$(VMDK_VERSION)-re-qemu.qcow2 && qemu-img convert -f vmdk -O qcow *-pfe-*.vmdk vqfx-$(VMDK_VERSION)-pfe-qemu.qcow; echo "VMDKs have been converted"; fi
+	@if ls *.vmdk; then echo "VMDKs exist, converting them to qcow format"; qemu-img convert -f vmdk -O qcow2 *-re-*.vmdk vqfx-$(VMDK_VERSION)-re-qemu.qcow2 2>&1 || true; qemu-img convert -f vmdk -O qcow *-pfe-*.vmdk vqfx-$(VMDK_VERSION)-pfe-qemu.qcow || true; echo "VMDKs have been converted"; fi
 
 # TODO: we should make sure we only copy one PFE image (the latest?), in case there are many
 docker-pre-build:
